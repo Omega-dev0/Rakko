@@ -1,16 +1,19 @@
 const express = require("express");
 const axios = require("axios");
 const { createServer } = require("http");
+const cors = require('cors')
 const HTMLParser = require('node-html-parser');
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 const httpServer = createServer(app);
 
 const subdomain = "/rakko/api";
 const port = 8080
 
+app.options(subdomain + "/getLink", cors())
 app.get(subdomain + "/getLink", async (req, res) => {
     let link = req.query.link //?link=...
     let url = new URL(link);
