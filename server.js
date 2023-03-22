@@ -13,11 +13,13 @@ const httpServer = createServer(app);
 const subdomain = "/rakko/api";
 const port = 8080
 
+const allowedDomains = ["anonfiles.com","bayfiles.com"]
+
 app.options(subdomain + "/getLink", cors())
 app.get(subdomain + "/getLink", async (req, res) => {
     let link = req.query.link //?link=...
     let url = new URL(link);
-    if(url.hostname != "bayfiles.com"){
+    if(!allowedDomains.includes(url.hostname)){
         res.status(403).send("Invalid url")
         return
     }
